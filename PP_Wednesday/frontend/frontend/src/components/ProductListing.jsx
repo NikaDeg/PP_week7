@@ -43,10 +43,12 @@ import { useState, useEffect } from "react";
 const ProductListing = ({ product }) => {
   return (
     <div className="product-preview">
-      <h2>{product.productName}</h2>
+      <Link to={`/products/${product._id}`}>
+        <h2>{product.productName}</h2>
+      </Link>
       <p>Category: {product.category}</p>
       <p>Price: ${product.price}</p>
-      <p>In Stock: {product.description}</p>
+      <p>Description: {product.description}</p>
     </div>
   );
 };
