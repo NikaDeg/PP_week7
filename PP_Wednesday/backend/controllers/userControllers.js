@@ -1,24 +1,16 @@
-const mongoose = require("mongoose");
-const User = require("../models/userModel");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
+const mongoose = require('mongoose');
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const generateToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, {
-    expiresIn: "3d",
+    expiresIn: '3d',
   });
 };
 
 const signUp = async (req, res) => {
-  const {
-    fullName,
-    email,
-    password,
-    phoneNumber,
-    gender,
-    date_of_birth,
-    accountType,
-  } = req.body;
+  const { fullName, email, password, phoneNumber, gender, date_of_birth, accountType } = req.body;
   try {
     if (
       !fullName ||
@@ -29,11 +21,11 @@ const signUp = async (req, res) => {
       !date_of_birth ||
       !accountType
     ) {
-      res.status(400).json("All fields requiered");
+      res.status(400).json('All fields requiered');
     }
     const existingUser = await User.findOne({ email: email });
     if (existingUser) {
-      res.status(400).send("User already exists");
+      res.status(400).send('User already exists');
     }
 
     const salt = await bcrypt.genSalt(8);
@@ -53,7 +45,7 @@ const signUp = async (req, res) => {
       res.status(201).json({ email, token });
     } else {
       res.status(400);
-      throw new Error("Invalid user data");
+      throw new Error('Invalid user data');
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -70,7 +62,7 @@ const login = async (req, res) => {
       res.status(200).json({ email, token });
     } else {
       res.status(400);
-      throw new Error("Invalid credentials");
+      throw new Error('Invalid credentials');
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
