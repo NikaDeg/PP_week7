@@ -11,8 +11,8 @@ const productSchema = new mongoose.Schema({
     contactEmail: { type: String, required: true },
     contactPhone: { type: Number, required: true },
     isVerified: { type: Boolean, default: false },
-  },
-});
+  }
+},{timestamps: true});
 
 const Product = mongoose.model('Product', productSchema);
 
