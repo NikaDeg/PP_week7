@@ -1,11 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const productRouter = require('./routes/productRouter');
-const {
-  unknownEndpoint,
-  errorHandler,
-  requestLogger,
-} = require('./middleware/customMiddleware');
+const { unknownEndpoint, errorHandler, requestLogger } = require('./middleware/customMiddleware');
 
 const app = express();
 
