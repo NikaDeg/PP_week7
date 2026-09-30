@@ -16,12 +16,28 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  try{
-    const allProducts = await Product.find({}).sort({createdAt: -1});
+  try {
+    const allProducts = await Product.find({}).sort({ createdAt: -1 });
     res.status(200).json(allProducts);
-  }catch(error){
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
-module.exports = { createProduct, getAllProducts };
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).send('not a valid id');
+  }
+  try {
+    const result = await Product.findOneAndDelete({ _id: id });
+    if (!result) {
+      res.status(404).json({ message: 'Not deleted' });
+    }
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+module.exports = { createProduct, getAllProducts, deleteProduct };
