@@ -1,38 +1,38 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddProductPage = () => {
-  const [productName, setProductName] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [inventoryCount, setInventoryCount] = useState('');
-  const [supplierName, setSupplierName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
+  const [productName, setProductName] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [inventoryCount, setInventoryCount] = useState("");
+  const [supplierName, setSupplierName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
   const [isVerified, setIsVerified] = useState();
 
-  // const user = JSON.parse(localStorage.getItem('user'));
-  // const token = user ? user.token : null;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
 
   const navigate = useNavigate();
 
   const addProduct = async (newProduct) => {
     try {
-      const res = await fetch('/api/products', {
-        method: 'POST',
+      const res = await fetch("/api/products", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          // Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(newProduct),
       });
       if (!res.ok) {
-        throw new Error('Failed to add product');
+        throw new Error("Failed to add product");
       }
       return true;
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
       return false;
     }
   };
@@ -57,10 +57,10 @@ const AddProductPage = () => {
 
     const success = await addProduct(newProduct);
     if (success) {
-      console.log('Product Added Successfully');
-      navigate('/');
+      console.log("Product Added Successfully");
+      navigate("/");
     } else {
-      console.error('Failed to add the product');
+      console.error("Failed to add the product");
     }
   };
 
@@ -134,7 +134,7 @@ const AddProductPage = () => {
           onChange={(e) => setContactPhone(Number(e.target.value))}
         />
 
-        <button type="submit">Add Book</button>
+        <button type="submit">Add Product</button>
       </form>
     </div>
   );

@@ -15,6 +15,9 @@ const EditProductPage = () => {
   const [contactPhone, setContactPhone] = useState("");
   const [loading, setLoading] = useState(true);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -43,6 +46,7 @@ const EditProductPage = () => {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(product),
       });

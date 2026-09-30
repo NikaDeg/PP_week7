@@ -1,17 +1,23 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const ProductPage = () => {
+const ProductPage = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = user ? user.token : null;
+
   const deleteProduct = async (id) => {
     try {
       const res = await fetch(`/api/products/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (!res.ok) {
         throw new Error("Network response was not ok");
@@ -61,8 +67,14 @@ const ProductPage = () => {
           <p>Phone: {product.supplier.contactPhone}</p>
           <p>Supplier Rating: {product.supplier.rating || "—"}</p>
           <button onClick={() => navigate("/")}>Back</button>
-          <button onClick={() => deleteProduct(id)}>delete</button>
-          <button onClick={() => navigate(`/edit-product/${id}`)}>Edit</button>
+          {isAuthenticated && (
+            <>
+              <button onClick={() => navigate(`/edit-product/${product._id}`)}>
+                Edit
+              </button>
+              <button onClick={() => deleteProduct(id)}>Delete</button>
+            </>
+          )}
         </>
       )}
     </div>
