@@ -40,23 +40,41 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-const getProductById = async (req,res) => {
+const getProductById = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(404).send('not a valid id');
   }
-  try{
-    const productById = await Product.findById(id)
-    if (productById){
-      res.status(200).json(productById)
-    }else {
-      res.status(404).send("invalid ID")
+  try {
+    const productById = await Product.findById(id);
+    if (productById) {
+      res.status(200).json(productById);
+    } else {
+      res.status(404).send('invalid ID');
     }
-
-  }catch(error){
+  } catch (error) {
     res.status(500).send({ message: error.message });
   }
-}
+};
 
-
-module.exports = { createProduct, getAllProducts, deleteProduct, getProductById };
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).send('not a valid id');
+  }
+  const updatedData = req.body;
+  try {
+    const update = await Product.findByIdAndUpdate(
+      { _id: id },
+      { ...updatedData },
+      { returnDocument: 'after' },
+    );
+    if (!update) {
+      res.status(404).send('update failed');
+    }
+    res.status(200).json(update);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+module.exports = { createProduct, getAllProducts, deleteProduct, getProductById, updateProduct };
