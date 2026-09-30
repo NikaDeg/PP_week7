@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/HomePage";
 import AddProductPage from "./pages/AddProductPage";
 import ProductPage from "./pages/ProductPage";
-import ProductListing from "./components/ProductListing";
+import EditProductPage from "./pages/EditProductPage";
 // import Navbar from "./components/Navbar";
 // import NotFoundPage from "./pages/NotFoundPage";
 
@@ -17,6 +17,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/products/:id" element={<ProductPage />} />
             <Route path="/add-product" element={<AddProductPage />} />
+            <Route path="/edit-product/:id" element={<EditProductPage />} />
 
             {/* <Route path="*" element={<NotFoundPage />} /> */}
           </Routes>

@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -11,13 +11,13 @@ const ProductPage = () => {
   const deleteProduct = async (id) => {
     try {
       const res = await fetch(`/api/products/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       if (!res.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       console.log(res);
-      navigate('/');
+      navigate("/");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -29,7 +29,7 @@ const ProductPage = () => {
       try {
         const res = await fetch(`/api/products/${id}`);
         if (!res.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await res.json();
         setProduct(data);
@@ -54,14 +54,15 @@ const ProductPage = () => {
           <h2>{product.productName}</h2>
           <p>Category: {product.category}</p>
           <p>Description: {product.description}</p>
-          <p>Price: ${product.price.toFixed(2)}</p>
-          <p>In Stock: {product.stockQuantity}</p>
+          <p>Price: ${product.price}</p>
+          <p>Inventory count: {product.inventoryCount}</p>
           <p>Supplier: {product.supplier.name}</p>
           <p>Email: {product.supplier.contactEmail}</p>
           <p>Phone: {product.supplier.contactPhone}</p>
-          <p>Supplier Rating: {product.supplier.rating || '—'}</p>
-          <button onClick={() => navigate('/')}>Back</button>
+          <p>Supplier Rating: {product.supplier.rating || "—"}</p>
+          <button onClick={() => navigate("/")}>Back</button>
           <button onClick={() => deleteProduct(id)}>delete</button>
+          <button onClick={() => navigate(`/edit-product/${id}`)}>Edit</button>
         </>
       )}
     </div>
