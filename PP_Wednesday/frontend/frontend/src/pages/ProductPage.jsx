@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const ProductPage = () => {
   const navigate = useNavigate();
@@ -8,12 +8,28 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const deleteProduct = async (id) => {
+    try {
+      const res = await fetch(`/api/products/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log(res);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const res = await fetch(`/api/products/${id}`);
         if (!res.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
         const data = await res.json();
         setProduct(data);
@@ -43,8 +59,9 @@ const ProductPage = () => {
           <p>Supplier: {product.supplier.name}</p>
           <p>Email: {product.supplier.contactEmail}</p>
           <p>Phone: {product.supplier.contactPhone}</p>
-          <p>Supplier Rating: {product.supplier.rating || "—"}</p>
-          <button onClick={() => navigate("/")}>Back</button>
+          <p>Supplier Rating: {product.supplier.rating || '—'}</p>
+          <button onClick={() => navigate('/')}>Back</button>
+          <button onClick={() => deleteProduct(id)}>delete</button>
         </>
       )}
     </div>
