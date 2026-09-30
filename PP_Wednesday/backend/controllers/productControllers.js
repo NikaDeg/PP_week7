@@ -40,4 +40,23 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, getAllProducts, deleteProduct };
+const getProductById = async (req,res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(404).send('not a valid id');
+  }
+  try{
+    const productById = await Product.findById(id)
+    if (productById){
+      res.status(200).json(productById)
+    }else {
+      res.status(404).send("invalid ID")
+    }
+
+  }catch(error){
+    res.status(500).send({ message: error.message });
+  }
+}
+
+
+module.exports = { createProduct, getAllProducts, deleteProduct, getProductById };
