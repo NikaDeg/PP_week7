@@ -8,12 +8,12 @@ const {
   getProductById,
   updateProduct,
 } = require('../controllers/productControllers');
-const requireAuth = require('../middleware/requireAuth');
+// const requireAuth = require('../middleware/requireAuth');
 
 router.get('/', getAllProducts);
 router.get('/:id', getProductById);
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 router.delete('/:id', deleteProduct);
 

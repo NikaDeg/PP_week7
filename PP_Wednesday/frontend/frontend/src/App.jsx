@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AddProductPage from './pages/AddProductPage';
 
 // import Home from "./pages/HomePage";
 // import AddProductPage from "./pages/AddProductPage";
@@ -9,6 +10,7 @@ const App = () => {
   return (
     <div className="App">
       <p>Hello</p>
+      <AddProductPage />
       {/* <BrowserRouter>
         <Navbar />
         <p>Hello</p>

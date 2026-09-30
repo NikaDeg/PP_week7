@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Product = require('../models/productModel');
 
 const createProduct = async (req, res) => {
-  const userId = req.user._id;
+  // const userId = req.user._id;
   try {
     const data = req.body;
-    const result = await Product.create({ ...data, userId });
+    const result = await Product.create({ ...data });
     if (!result) {
       res.status(400).json({ message: 'Sorry, failed to create....' });
     }
