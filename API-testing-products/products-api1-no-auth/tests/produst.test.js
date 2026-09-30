@@ -134,6 +134,10 @@ describe('POST /api/products', () => {
   });
 });
 
+
+// PUT
+
+
 describe('PUT /api/products/:productId', () => {
   describe('when the id is valid', () => {
     it('should return one product by ID', async () => {
@@ -162,6 +166,8 @@ describe('PUT /api/products/:productId', () => {
     });
   });
 });
+
+//GET BY ID
 
 describe('GET /api/products/:productId', () => {
   describe(' when the id is valid', () => {
